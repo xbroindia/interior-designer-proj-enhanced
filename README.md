@@ -109,3 +109,9 @@ All design tokens live in `tailwind.config.js`:
 - **Tailwind CSS 3** — Utility-first styling
 - **Formspree** — Contact form backend
 - **Google Fonts** — Cormorant Garamond + DM Sans
+
+---
+
+## 🌐 live
+
+- **live**-
