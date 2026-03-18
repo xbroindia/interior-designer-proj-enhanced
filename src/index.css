@@ -1,0 +1,179 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Google Fonts already loaded via index.html ── */
+
+/* ── Base resets ── */
+@layer base {
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    @apply bg-dark text-cream font-body font-light leading-relaxed overflow-x-hidden;
+  }
+  img { display: block; max-width: 100%; }
+  a   { text-decoration: none; color: inherit; }
+}
+
+/* ── Reusable component classes ── */
+@layer components {
+
+  /* Section label */
+  .section-label {
+    @apply text-gold uppercase tracking-[0.28em] font-medium text-[0.68rem];
+  }
+
+  /* Section title */
+  .section-title {
+    @apply font-display font-light leading-[1.12] text-cream;
+    font-size: clamp(2.4rem, 5vw, 4rem);
+  }
+  .section-title em {
+    @apply not-italic text-gold-light italic;
+    font-style: italic !important;
+  }
+
+  /* Gold divider */
+  .divider {
+    @apply w-12 h-px bg-gold my-[1.4rem];
+  }
+
+  /* Buttons */
+  .btn {
+    @apply inline-flex items-center gap-2 font-body text-[0.78rem] font-medium
+           uppercase tracking-[0.13em] px-[2.1rem] py-[0.9rem] rounded-sm
+           cursor-pointer transition-all duration-300 border;
+  }
+  .btn-gold {
+    @apply bg-gold text-[#0A0A0A] border-gold
+           hover:bg-gold-light hover:border-gold-light hover:-translate-y-0.5
+           hover:shadow-[0_8px_30px_rgba(201,168,76,0.35)];
+  }
+  .btn-outline {
+    @apply bg-transparent text-cream border-white/35
+           hover:border-gold hover:text-gold hover:-translate-y-0.5;
+  }
+
+  /* Scroll-reveal base states */
+  .reveal {
+    @apply opacity-0 translate-y-10;
+    transition: opacity 0.8s cubic-bezier(0.4,0,0.2,1),
+                transform 0.8s cubic-bezier(0.4,0,0.2,1);
+  }
+  .reveal-left {
+    @apply opacity-0 -translate-x-10;
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .reveal-right {
+    @apply opacity-0 translate-x-10;
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .reveal.visible,
+  .reveal-left.visible,
+  .reveal-right.visible {
+    @apply opacity-100 translate-x-0 translate-y-0;
+  }
+  .delay-1 { transition-delay: 0.15s; }
+  .delay-2 { transition-delay: 0.30s; }
+  .delay-3 { transition-delay: 0.45s; }
+  .delay-4 { transition-delay: 0.60s; }
+
+  /* Navbar underline link */
+  .nav-link {
+    @apply text-[0.76rem] font-light tracking-[0.1em] uppercase text-[#BBBBBB]
+           relative pb-[3px] transition-colors duration-300;
+  }
+  .nav-link::after {
+    content: '';
+    @apply absolute bottom-0 left-0 w-0 h-px bg-gold transition-all duration-300;
+  }
+  .nav-link:hover,
+  .nav-link.active {
+    @apply text-cream;
+  }
+  .nav-link:hover::after,
+  .nav-link.active::after {
+    @apply w-full;
+  }
+
+  /* Service card hover sweep */
+  .svc-card {
+    @apply relative overflow-hidden;
+  }
+  .svc-card::before {
+    content: '';
+    @apply absolute bottom-0 left-0 w-0 h-0.5 bg-gold;
+    transition: width 0.55s ease;
+  }
+  .svc-card:hover::before { width: 100%; }
+
+  /* Project item */
+  .proj-overlay {
+    @apply absolute inset-0 opacity-0 flex items-end p-7;
+    background: linear-gradient(to top, rgba(0,0,0,0.88) 0%, transparent 60%);
+    transition: opacity 0.35s cubic-bezier(0.4,0,0.2,1);
+  }
+  .proj-info {
+    @apply translate-y-3;
+    transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
+  }
+  .proj-item:hover .proj-overlay { opacity: 1; }
+  .proj-item:hover .proj-info    { @apply translate-y-0; }
+  .proj-item:hover .proj-img     { transform: scale(1.06); }
+
+  /* Hero scroll indicator */
+  .scroll-line {
+    @apply w-10 h-px bg-white/25 overflow-hidden relative;
+  }
+  .scroll-line::after {
+    content: '';
+    @apply absolute top-0 bg-gold h-full;
+    width: 100%;
+    left: -100%;
+    animation: scrollLine 2s infinite;
+  }
+
+  /* Floating action button */
+  .fab {
+    @apply relative w-[52px] h-[52px] rounded-full flex items-center justify-center
+           text-xl cursor-pointer no-underline shadow-[0_4px_20px_rgba(0,0,0,0.45)]
+           transition-transform duration-300 hover:scale-110;
+  }
+  .fab-tip {
+    @apply absolute right-[60px] bg-black/80 backdrop-blur-sm text-white
+           px-3 py-1 text-[0.7rem] whitespace-nowrap rounded-sm
+           opacity-0 pointer-events-none transition-opacity duration-200;
+  }
+  .fab:hover .fab-tip { opacity: 1; }
+
+  /* Form inputs */
+  .form-field {
+    @apply w-full bg-white/[0.03] border border-white/[0.08] px-4 py-[0.85rem]
+           text-cream font-body text-[0.87rem] outline-none rounded-none
+           transition-all duration-300 placeholder:text-white/20
+           focus:border-gold focus:bg-gold/[0.03];
+    -webkit-appearance: none;
+  }
+  .form-label {
+    @apply block text-[0.65rem] tracking-[0.18em] uppercase text-[#888] mb-[0.45rem];
+  }
+}
+
+/* ── Hero badge line ── */
+.hero-badge-line::before {
+  content: '';
+  display: block;
+  width: 30px;
+  height: 1px;
+  background: #C9A84C;
+}
+
+/* ── Keyframes (referenced in tailwind.config) ── */
+@keyframes scrollLine {
+  0%   { left: -100%; }
+  100% { left: 100%;  }
+}
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0);    }
+}
